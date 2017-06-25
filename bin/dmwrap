@@ -1,0 +1,15 @@
+#!/usr/bin/bash
+#dmwrap - dmenu wrapper
+
+font="-kakwa-kakwafont-medium-r-normal--12-120-72-72-c-60-iso8859-1"
+nb="$(xrdb -query|awk '/\*background/ {print $2}')"
+nf="$(xrdb -query|awk '/\*foreground/ {print $2}')"
+sb="$(xrdb -query|awk '/\*color8:/ {print $2}')"
+sf="$(xrdb -query|awk '/\*color7:/ {print $2}')"
+w="1366"
+h="30"
+x="0"
+y="0"
+opt="-fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" -w "$w" -h "$h" -x "$x" -y "$y""
+
+dmenu $opt 

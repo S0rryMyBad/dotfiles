@@ -1,0 +1,48 @@
+#!/bin/bash
+
+. $HOME/bin/colr
+. $HOME/.bg
+
+# Fix Fonts
+xset +fp /usr/share/fonts/jmk/ &
+xset +fp /usr/share/fonts/misc/ &
+xset fp rehash &
+
+# low brightness monitor
+xcalib ~/.x230.icm &
+
+# Fix X Pointer
+xsetroot -cursor_name left_ptr &
+
+# disable tapping and scrolling for 0.5 seconds after each keypress
+syndaemon -i 0.5 -t -K -R &
+
+# touchpad click
+synclient TapButton1=1 &
+
+# LowPointer
+LowMouse &
+
+# Load Colors
+xrdb ~/.Xresources &
+
+# Load Wallpaper
+hsetroot -solid "$(xrdb -query|awk '/\*background/ {print $2}')" -tile ~/images/bitmaps/tiles.xbm -contrast 0.9 &
+
+# Daemons and Programs
+compton --config /home/betmen/.config/comptonconfig/candy2 &
+#sxhkd &
+thunar --daemon &
+urxvt -q -o -f 100 &
+
+# fan
+echo 1 | sudo tee /sys/class/thermal/cooling_device0/cur_state
+
+# fix java programs
+wmname LG3D &
+
+# bar
+~/bin/infobar &
+
+# Window Manager
+exec 2bwm

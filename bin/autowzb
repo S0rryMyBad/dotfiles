@@ -1,0 +1,217 @@
+#!/usr/bin/env bash
+# Script Name: autowzb
+# Written by Ethan Chan - https://github.com/metakirby5
+# Heavily modified by fullsalvo
+# Runs colorz on an image file to get 8 colors, then stuffs those colors
+# through wzb.
+# Dependency: colorz - https://github.com/metakirby5/colorz
+
+SRC=~/.autowzb
+
+COLORS=(
+	black
+	red
+	green
+	yellow
+	blue
+	magenta
+	cyan
+	white
+)
+
+read -r -d '' TEMPLATE << EOM
+wallpapers: "%s"
+
+name:           "%s"
+colors:
+  primary:      "%s"
+  secondary:    "%s"
+  black:
+    normal:     "%s"
+    bold:       "%s"
+  red:
+    normal:     "%s"
+    bold:       "%s"
+  green:
+    normal:     "%s"
+    bold:       "%s"
+  yellow:
+    normal:     "%s"
+    bold:       "%s"
+  blue:
+    normal:     "%s"
+    bold:       "%s"
+  magenta:
+    normal:     "%s"
+    bold:       "%s"
+  cyan:
+    normal:     "%s"
+    bold:       "%s"
+  white:
+    normal:     "%s"
+    bold:       "%s"
+EOM
+
+read -r -d '' NOBW <<-'NOBW'
+wallpapers: "%s"
+
+name:           "%s"
+colors:
+  primary:      "%s"
+  secondary:    "%s"
+  red:
+    normal:     "%s"
+    bold:       "%s"
+  green:
+    normal:     "%s"
+    bold:       "%s"
+  yellow:
+    normal:     "%s"
+    bold:       "%s"
+  blue:
+    normal:     "%s"
+    bold:       "%s"
+  magenta:
+    normal:     "%s"
+    bold:       "%s"
+  cyan:
+    normal:     "%s"
+    bold:       "%s"
+NOBW
+
+
+################
+# Declarations #
+################
+
+declare primary="red"
+declare secondary="blue"
+declare temp=$NOBW
+declare col=6
+
+#############
+# Functions #
+#############
+
+usage() {
+    clear
+    more <<-'HELP'
+autowzb - sanpai theme generator
+Usage:
+autowzb [ command [ args... ] ] image file/URL
+If image URL provided, image will be saved at "~/.autowzb".
+Available colors: black, red,  green, yellow,
+                  blue, magenta, cyan, white
+
+Options:
+  -h
+        Show help options
+  -p <color name>
+        Set primary color for template
+  -s <color name>
+        Set secondary color for template
+  -c
+        Include black and white in the templating
+          (default: no black and white)
+HELP
+}
+
+err() {
+	printf "\e[31m$1\e[0m" >&2
+}
+
+hl () {
+	printf "\e[32m$1\e[0m" >&2
+}
+
+is_a_color() {
+	[[ " ${COLORS[*]} " =~ *" $1 "* ]]
+	return $?
+}
+
+wzb ()
+{
+	if [ "$#" -eq 0 ]; then
+	$RHISK_COMM -e >/dev/null
+	else
+	$RHISK_COMM -e "$@" >/dev/null
+	fi
+
+	[ "$?" -ne 0 ] && exit 1
+
+	reload-desktop
+	[ "$#" -ne 0 ] && sleep 0.5
+
+}
+
+template ()
+{
+	if [ ! -f "$1" ]; then
+	[[ "$1" != http* ]] && usage
+
+	curl "$1" -o "$SRC" 2>/dev/null || (echo "URL invalid." && exit 1)
+	else
+	cp "$1" "$SRC" 2>/dev/null
+	fi
+
+	# Starting...
+	echo "Using primary = $primary, secondary = $secondary..."
+	echo
+
+	colors="$(colorz --no-preview -n $col "$SRC")"
+	[ "${PIPESTATUS[0]}" -ne 0 ] && exit 1
+
+	yaml="$(echo \
+  "$(readlink -f "$SRC")" "$(basename "$1" | cut -f 1 -d .)" \
+  "$primary" "$secondary" \
+  "$colors" |\
+xargs printf "$temp")"
+
+	echo "Generated YAML:"
+	echo "$yaml"
+	echo
+
+	echo "Running wzb..."
+	wzb <(echo "$yaml")
+
+	if [[ ! -z $(which feh) ]];then
+	feh --bg-fill --no-fehbg "$SRC"
+	fi
+	exit
+}
+
+###########
+# Options #
+###########
+
+while getopts ':hp:s:c' option; do
+	case $option in
+	h)
+		usage
+		exit
+		;;
+	p)
+		primary="$OPTARG"
+		;;
+	s)
+		secondary="$OPTARG"
+		;;
+	c)
+		temp=$TEMPLATE
+		col=8
+		;;
+	\?)
+		err "-$OPTARG is not a valid option\n"
+		exit
+		;;
+	esac
+done
+shift $((OPTIND-1))
+
+########
+# Main #
+########
+
+if [[ "$#" -ge 1 ]]; then
+	template "$@"
+fi

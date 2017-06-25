@@ -1,0 +1,3 @@
+URxvt*font:			xft:MesloLGLDZ Nerd Font:Regular:pixelsize=12
+URxvt*boldFont:		xft:MesloLGLDZ Nerd Font:Bold:pixelsize=12
+URxvt*italicFont:	xft:MesloLGLDZ Nerd Font:Italic:pixelsize=12
