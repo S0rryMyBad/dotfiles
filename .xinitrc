@@ -34,5 +34,5 @@ wal -R -o wal-set
 
 # window manager
 #exec startxfce4
-exec openbox-session
+exec ck-launch-session dbus-launch openbox-session
 #exec dwm
