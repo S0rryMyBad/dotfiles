@@ -1,4 +1,4 @@
-syntax "haskell" "\.hs$"
+syntax "Haskell" "\.hs$"
 
 ## Keywords
 color red "[ ](as|case|of|class|data|default|deriving|do|forall|foreign|hiding|if|then|else|import|infix|infixl|infixr|instance|let|in|mdo|module|newtype|qualified|type|where)[ ]"
@@ -29,3 +29,6 @@ color green "--.*"
 color green start="\{-" end="-\}"
 
 color brightred "undefined"
+
+## Trailing spaces
+color ,green "[[:space:]]+$"

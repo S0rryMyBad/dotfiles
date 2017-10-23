@@ -1,4 +1,7 @@
-syntax "ml" ".*\.([jrs]?html?|xml|sgml?|lhtml|opml|kdevelop|vcproj|glade|xsd|plist|gcs|dtd|dcl)$" "catalog$" "docbook$"
+## Here is an example for xml files.
+##
+
+syntax "XML" ".*\.([jrs]?html?|xml|sgml?|rng)$"
 color white "^.+$"
 color green  start="<" end=">"
 color cyan   "<[^> ]+"
@@ -7,3 +10,5 @@ color yellow start="<!DOCTYPE" end="[/]?>"
 color yellow start="<!--" end="-->"
 color red    "&[^;]*;"
 
+## Trailing spaces
+color ,green "[[:space:]]+$"

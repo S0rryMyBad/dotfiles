@@ -1,36 +1,13 @@
-# Supports `YAML` files
 syntax "YAML" "\.ya?ml$"
-header "^(---|===)" "%YAML"
+header "^---" "%YAML"
 
-## Keys
-color magenta "^\s*[\$A-Za-z0-9_-]+\:"
-color brightmagenta "^\s*@[\$A-Za-z0-9_-]+\:"
-
-## Values
-color white ":\s.+$"
-## Booleans
-icolor brightcyan " (y|yes|n|no|true|false|on|off)$"
-## Numbers
-color brightred " [[:digit:]]+(\.[[:digit:]]+)?"
-## Arrays
-color red "\[" "\]" ":\s+[|>]" "^\s*- "
-## Reserved
-color green "(^| )!!(binary|bool|float|int|map|null|omap|seq|set|str) "
-
-## Comments
-color brightwhite "#.*$"
-
-## Errors
-color ,red ":\w.+$"
-color ,red ":'.+$"
-color ,red ":".+$"
-color ,red "\s+$"
-
-## Non closed quote
-color ,red "['\"][^['\"]]*$"
-
-## Closed quotes
-color yellow "['\"].*['\"]"
-
-## Equal sign
-color brightgreen ":( |$)"
+color green     "(^| )!!(binary|bool|float|int|map|null|omap|seq|set|str) "
+color brightcyan  "\<(YES|yes|Y|y|ON|on|NO|no|N|n|OFF|off)\>"
+color brightcyan "\<(true|false)\>"
+color red ":[[:space:]]" "\[" "\]" ":[[:space:]]+[|>]" "^[[:space:]]*- "
+color brightyellow "[[:space:]][\*&][A-Za-z0-9]+"
+color yellow ""(\\.|[^"])*"|'(\\.|[^'])*'"
+color brightblack "(^|[[:space:]])#([^{].*)?$"
+color brightmagenta  "^---" "^\.\.\." "^%YAML" "^%TAG"
+color ,green "[[:space:]]+$"
+color ,red "	+ +| +	+"

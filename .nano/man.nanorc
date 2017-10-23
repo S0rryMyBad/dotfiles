@@ -1,4 +1,6 @@
-syntax "man" "\.[1-9]x?$"
+## Here is an example for manpages.
+##
+syntax "Man" "\.[1-9]x?$"
 color green "\.(S|T)H.*$"
 color brightgreen "\.(S|T)H" "\.TP"
 color brightred "\.(BR?|I[PR]?).*$"

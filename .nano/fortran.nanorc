@@ -1,5 +1,8 @@
-syntax "fortran" "\.(f|f90|f95|for)$" 
+## Here is an example for Fortran 90/95
 
+syntax "Fortran" "\.([Ff]|[Ff]90|[Ff]95|[Ff][Oo][Rr])$"
+
+#color red "\<[A-Z_]a[0-9A-Z_]+\>" 
 color red "\<[0-9]+\>" 
 
 icolor green "\<(action|advance|all|allocatable|allocated|any|apostrophe)\>"
@@ -30,14 +33,21 @@ icolor yellow "\<(.or.|repeat|select case|then|where|while)\>"
 
 icolor magenta "\<(continue|cycle|exit|go?to|result|return)\>"
 
-## Operators
+#Operator Color
 color yellow "[.:;,+*|=!\%]" "<" ">" "/" "-" "&"
 
-## Braces and parentheses
+#Parenthetical Color
 color magenta "[(){}]" "\[" "\]"
 
-## Strings
-icolor brightblue "<[^=     ]*>" ""(\\.|[^"])*""
+# Add preprocessor commands.
+color brightcyan "^[[:space:]]*#[[:space:]]*(define|include|(un|ifn?)def|endif|el(if|se)|if|warning|error)"
 
-## Comments
-icolor brightred "^!.*" "^c.*" "^C.*"
+## String highlighting.  
+icolor cyan "<[^=     ]*>" ""(\\.|[^"])*""
+icolor cyan "<[^=     ]*>" "'(\\.|[^"])*'"
+
+## Comment highlighting
+icolor brightred "!.*$" "(^[Cc]| [Cc]) .*$"
+
+## Trailing spaces
+color ,green "[[:space:]]+$"
