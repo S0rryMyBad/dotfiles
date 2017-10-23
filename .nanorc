@@ -1,0 +1,80 @@
+## Use 4-space tabsize
+set tabsize 4
+
+## Don't display the helpful shortcut lists at the bottom of the screen.
+set nohelp
+
+## Don't wrap text at all.
+set nowrap
+
+## Enable smooth line scrolling
+set smooth
+
+## Titlebar color
+set titlecolor white
+
+## Nanorc files
+include /home/betmenwasdie/.nano/nanorc.nanorc
+
+## C/C++
+include /home/betmenwasdie/.nano/c.nanorc
+
+## Makefiles
+include /home/betmenwasdie/.nano/makefile.nanorc
+
+## Cascading Style Sheets
+include /home/betmenwasdie/.nano/css.nanorc
+
+## Gentoo files
+include /home/betmenwasdie/.nano/gentoo.nanorc
+
+## HTML
+include /home/betmenwasdie/.nano/html.nanorc
+
+## PHP
+include /home/betmenwasdie/.nano/php.nanorc
+
+## TCL
+include /home/betmenwasdie/.nano/tcl.nanorc
+
+## TeX
+include /home/betmenwasdie/.nano/tex.nanorc
+
+## Quoted emails (under e.g. mutt)
+include /home/betmenwasdie/.nano/mutt.nanorc
+
+## Patch files
+include /home/betmenwasdie/.nano/patch.nanorc
+
+## Manpages
+include /home/betmenwasdie/.nano/man.nanorc
+
+## Groff
+include /home/betmenwasdie/.nano/groff.nanorc
+
+## Perl
+include /home/betmenwasdie/.nano/perl.nanorc
+
+## Python
+include /home/betmenwasdie/.nano/python.nanorc
+
+## Ruby
+include /home/betmenwasdie/.nano/ruby.nanorc
+
+## Java
+include /home/betmenwasdie/.nano/java.nanorc
+
+## Fortran
+include /home/betmenwasdie/.nano/fortran.nanorc
+
+## Assembler
+include /home/betmenwasdie/.nano/asm.nanorc
+
+## Bourne shell scripts
+include /home/betmenwasdie/.nano/sh.nanorc
+
+## POV-Ray
+include /home/betmenwasdie/.nano/pov.nanorc
+
+## XML-type files
+include /home/betmenwasdie/.nano/xml.nanorc
