@@ -1,4 +1,0 @@
-#!/usr/bin/bash
-
-dmcache=$HOME/.cache/dmenu_run
-cat $dmcache | dmwrap | sh &
