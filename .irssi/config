@@ -1,0 +1,100 @@
+utf8 = "on";
+
+servers = (
+  {
+    address = "chat.freenode.net";
+    chatnet = "freenode";
+    port = "6667";
+    use_ssl = "no";
+    ssl_verify = "no";
+    autoconnect = "no";
+  }
+);
+
+chatnets = {
+  freenode = { type = "IRC"; };
+  rizon = {
+    type = "IRC";
+    sasl_mechanism = "plain";
+    sasl_username = "randalltux";
+    sasl_password = "dr34mth34t3r";
+  };
+  nixers = { type = "IRC"; };
+  lainchan = { type = "IRC"; };
+};
+
+settings = {
+  core = {
+    real_name = "Randall Tux";
+    user_name = "randalltux";
+    nick = "randalltux";
+  };
+  "fe-text" = {
+    actlist_sort = "refnum";
+    indent = "10";
+    indent_always = "yes";
+  };
+  "fe-common/core" = {
+    theme = "c";
+    timestamps = "no";
+    show_nickmode_empty = "yes";
+    autolog = "yes";
+    show_names_on_join = "no";
+  };
+  type = "IRC";
+  "perl/core/scripts" = {
+    tmux_away_message = "afk";
+    tmux_away_window = "0";
+    irssinotifier_api_token = "<token>";
+    irssinotifier_encryption_password = "<password>";
+    irssinotifier_screen_detached_only = "no";
+    irssinotifier_away_only = "yes";
+    irssinotifier_ignore_active_window = "no";
+    nickcolor_enable_prefix = "yes";
+    nickcolor_enable_truncate = "yes";
+    nickcolor_prefix_text = "        %K—%n ";
+    nickcolor_truncate_value = "-7";
+    nickcolor_colors = "4 5 6 7 12 13 14";
+  };
+};
+
+statusbar = {
+  default = {
+    topic = { disabled = "yes"; };
+    window = {
+      items = {
+        barstart = { priority = "100"; };
+        user = { };
+        window = { };
+        window_empty = { };
+        lag = { priority = "-1"; alignment = "right"; position = "0"; };
+        act = { priority = "10"; alignment = "right"; position = "0"; };
+        more = { priority = "10"; alignment = "right"; position = "0"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+      position = "0";
+      placement = "top";
+      visible = "active";
+      disabled = "yes";
+    };
+    prompt = { position = "0"; };
+  };
+};
+
+
+ignores = ( { level = "JOINS PARTS QUITS MODES"; } );
+
+aliases = {
+  leave = "part";
+  close = "window close";
+  son = "statusbar window enable";
+  soff = "statusbar window disable";
+  afk = "away afk";
+};
+
+logs = { };
+
+keyboard = (
+  { key = "^O"; id = "command"; data = "son "; },
+  { key = "^P"; id = "command"; data = "soff "; }
+);
