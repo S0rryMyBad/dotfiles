@@ -1,3 +1,8 @@
+# load bitmaps fonts
+xset +fp /usr/share/fonts/artwiz-fonts
+xset +fp /usr/share/fonts/misc
+xset fp rehash
+
 # wallpaper
 hsetroot -solid '#4d5e63' &
 
