@@ -9,7 +9,6 @@ font="-benis-lemon-medium-r-normal-*-10-110-75-75-m-50-iso8859-1"
 ifont="-wuncon-siji-medium-r-normal-*-10-100-75-75-c-80-iso10646-1"
 battery="BAT0"
 
-
 # colors
 source "$colors"
 
@@ -78,6 +77,15 @@ clock() {
 	printf "$clock"
 }
 
+network() {
+	cnetwork=$(iwgetid -r)
+
+	if [ "$cnetwork" == "" ]; then
+		echo "not connected"
+	else
+		echo "$cnetwork"
+	fi
+}
 
 # loops
 dloop() {
@@ -87,6 +95,7 @@ dloop() {
 		$a3$(spotify)$bg\
 		$a2$(window)$bg\
 		%{r}\
+		$a2%{A:network &:}$padding$(network)$p%{A}$bg\
 		$a2%{A:notify-send 'updating the weather' && weather &:}$padding$(weather)$padding%{A}$bg\
 		$a2%{A:calendar &:}$padding$(clock)$padding%{A}$bg"
 		sleep "$refresh"
@@ -106,8 +115,9 @@ lloop() {
 		$a3$(spotify)$bg\
 		$a2$(window)$bg\
 		%{r}\
-		$a2%{A:batstat &:}$padding $(battery)$padding%{A}$bg\
-		$a2%{A:calendar &:}$padding $(clock)$padding%{A}$bg"
+		$a2%{A:network &:}$padding$(network)$padding%{A}$bg\
+		$a2%{A:batstat &:}$padding$(battery)$padding%{A}$bg\
+		$a2%{A:calendar &:}$padding$(clock)$padding%{A}$bg"
 		sleep "$refresh"
 	done |\
 
