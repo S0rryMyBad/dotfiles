@@ -1,156 +1,45 @@
-"" betmen vimrc
+" vim plug
+call plug#begin('~/.vim/plugged')
 
-"" Environment {{
-     " Basics {
-         set nocompatible        " must be first line
-         "set background=dark     " Assume a dark background
-         "Jump to the last position when reopening a file
-         if has("autocmd")
-            au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-         endif
-         "Automatic reloading of .vimrc
-         au BufWritePost .vimrc so ~/.vimrc
+Plug 'chriskempson/base16-vim'
+Plug 'sheerun/vim-polyglot'
 
-         if has("multi_byte")
-               if &termencoding == ""
-                       let &termencoding = &encoding
-               endif
-                       set encoding=utf-8
-                       setglobal fileencoding=utf-8
-                       "setglobal bomb
-                       set fileencodings=ucs-bom,utf-8,latin1
-               endif
+call plug#end()
 
+" set UTF-8 encoding
+set enc=utf-8
+set fenc=utf-8
+set termencoding=utf-8
 
-     scriptencoding utf-8
-     set encoding=utf-8
-     " }
-"" }}
+" disable vi compatibility (emulation of old bugs)
+set nocompatible
 
-"" Color Options {{
-    colorscheme jellybeans 
-    set background=dark
-	  let g:jellybeans_overrides = {
-		  \    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
-		  \              'ctermfg': 'Black', 'ctermbg': 'Yellow',
-		  \              'attr': 'bold' },
-		  \    'Comment': { 'guifg': 'cccccc' },
-   \}
-"" }}
+" use indentation of previous line
+set autoindent
 
-"" General Settings {{
-    "set background=dark
-    set t_Co=16 
-    "set tw=79 " Width of document
-    let mapleader=" "	
-    "set nocompatible
-	"filetype plugin on
-  filetype off
-	syntax on
-	"set nonumber
-	set norelativenumber
-	set tabstop=2
-	set shiftwidth=4
-	set cindent
-	set nowrap
-	set expandtab
-	set autoindent
-	set smartindent
-	set incsearch
-	set hlsearch
-	set cursorline
-	set novisualbell
-	set colorcolumn=80
-  "set list 
-  set listchars=tab:»\ ,eol:¬,trail:·,extends:→,precedes:←  "
-    "set showbreak=~ 
-	filetype plugin indent on
-	set noswapfile                 		" Don't create a swap file
-	set smartcase                  		" Search becomes case sensitive if caps used
-    set pastetoggle=<F10>
-    let g:Powerline_symbols = 'fancy'
-    "set showmatch
-    "When splitting windows, auto show num on focus
-    "au WinEnter * setlocal number
-    "au WinLeave * setlocal nonumber
-    "set statusline=\ %t\ %w%m%r%=[%{strlen(&ft)?&ft:'no\ ft'}]\ %l:%v\
-    "statusline
-"" }}
+" use intelligent indentation for C
+set smartindent
 
-"" Highlighting {{
-	let g:brightest#highlight = {"group": "BrightestUnderline"}
-	"highlight OverLength ctermbg=232 ctermfg=240
-	"match OverLength /\%81v.\+/    		" Highlight text exceeding 80 character limit
-    " indent guide coloring
-    hi IndentGuidesOdd ctermbg=234
-    hi IndentGuidesEven ctermbg=231
-    "autocmd CursorMoved * exe printf('match WordUnder /\V\<%s\>/', escape(expand('<cword>'), '/\'))
-"" }}
+" configure tabwidth and insert spaces instead of tabs
+set tabstop=4        " tab width is 4 spaces
+set shiftwidth=4     " indent also with 4 spaces
+set expandtab        " expand tabs to spaces
 
-"" Code Folding {{{
-	set foldenable                		    " Enable code folding
-	set foldmethod=manual          	   	    " But do it manually
-    autocmd BufWinLeave * mkview            " Auto save folds
-    "autocmd BufWinEnter * silent loadview   " Auto load saved folds
-" }}}
+" wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
+set textwidth=120
 
-"" Extras {{
-    inoremap qq <Esc>                   " remap the ESC key	
-    nnoremap H :set cursorline! cursorcolumn!<CR>
-    map <C-t> :NERDTreeToggle<CR>
-    let g:NERDTreeDirArrows=0
-    "noremap <C-n> :call NumberToggle()<CR>
-    map <C-n> :set number!<CR>
-    map <C-m> :set relativenumber!<CR>
-    ":au FocusLost * :set number
-    ":au FocusGained * :set relativenumber
-    map <C-c> :%s/\s\+$//<CR>
-    map <tab> %
-    cmap w!! w !sudo tee % > /dev/null %	" save read only files when forget to use sudo
-    "cmap w !sudo cat >%	 "save file without needed permissions
-    let $GROFF_NO_SGR=1
-	source $VIMRUNTIME/ftplugin/man.vim
-	nmap K :Man <cword><CR>
-	au BufLeave,FocusLost * silent! update  " buffer auto save
+" turn syntax highlighting on
+set t_Co=256
+syntax on
 
-"" Paren highlighting
-" A massively simplified take on
-" https://github.com/chreekat/vim-paren-crosshairs
-" A massively simplified take on https://github.com/chreekat/vim-paren-crosshairs
-func! s:matchparen_cursorcolumn_setup()
-  augroup matchparen_cursorcolumn
-    autocmd!
-    autocmd CursorMoved * if get(w:, "paren_hl_on", 0) | set cursorcolumn | else | set nocursorcolumn | endif
-    autocmd InsertEnter * set nocursorcolumn
-  augroup END
-endf
-if !&cursorcolumn
-  augroup matchparen_cursorcolumn_setup
-    autocmd!
-    " - Add the event _only_ if matchparen is enabled.
-    " - Event must be added _after_ matchparen loaded (so we can react to w:paren_hl_on).
-    autocmd CursorMoved * if exists("#matchparen#CursorMoved") | call <sid>matchparen_cursorcolumn_setup() | endif
-          \ | autocmd! matchparen_cursorcolumn_setup
-  augroup END
+" colorscheme
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
 endif
-"" }} 
 
-"" Plugins {{
-	call plug#begin('~/.vim/plugged')     	" use for plug.vim
-	Plug 'junegunn/seoul256.vim'
-	Plug 'junegunn/vim-easy-align'
-	Plug 'junegunn/goyo.vim'
-  Plug 'jaxbot/semantic-highlight.vim'
-  Plug 'sheerun/vim-polyglot'
-	call plug#end()
+" highlight matching braces
+set showmatch
 
-    "autocmd StdinReadPre * let s:std_in=1
-    "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endi
-    " by default vim-airline only shows when split. This changes that setting
-    Plug 'itchyny/lightline.vim' 
-    let g:lightline = {
-          \ 'colorscheme': 'plus',
-          \ }
-    "set laststatus=2
-"" }}
-
+" intelligent comments
+set comments=sl:/*,mb:\ *,elx:\ */
