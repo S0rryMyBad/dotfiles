@@ -1,0 +1,17 @@
+[core]
+	filemode = true
+	excludesfile = ~/.gitignore
+[user]
+	email = betmenwasdie@gmail.com
+	name = вєтмєη
+[push]
+	default = simple
+[color]
+	ui = auto
+[alias]
+	ls = log --oneline --graph --decorate
+	graph = log --graph --pretty=format:\
+"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+[credential "https://github.com"]
+	username = betmenwasdie
+
